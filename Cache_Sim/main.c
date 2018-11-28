@@ -22,7 +22,7 @@
 
 int main(int argc, const char * argv[]) {
     srand((unsigned int) time(NULL));
-    
+    printf("Hello world \n");
     // Consts
     int sample_rate = (ITERATION / 10);
     int itr_to_addr = ITERATION / ADDR_LENGTH;
