@@ -63,6 +63,17 @@ void Init(Mode mode)
             Cache[i].Space_for_data[j].data=INT_MIN;
 
 }
+void clear_cache(void)
+{
+    for(int i=0;i<SIZE;++i)
+        free(Cache[i].Space_for_data);
+    
+    free(Cache);
+    
+    Hit=0;
+    Miss=0;
+}
+
 
 double cache_get_miss_rate(void)
 {
