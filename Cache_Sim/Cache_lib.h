@@ -15,4 +15,5 @@ void Init(Mode mode);
 void cache_write(int* address, int data);
 int  cache_read(int* address);
 double cache_get_miss_rate(void);
+void clear_cache(void);
 #endif /* Cache_lib_h */
