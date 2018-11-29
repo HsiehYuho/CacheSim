@@ -38,27 +38,26 @@ void init(int addr_length, Mode mode){
     array_ptr = gen_array_of_addr(addr_length);
     Init(mode);
     for(int i = 0; i < addr_length; i++){
-        cache_write(array_ptr[i],*(array_ptr[i]));
+        cache_write(array_ptr[i],((int)array_ptr[i]));
     }
 }
 
 bool simulate(int range_start, int range_end){
     COMMAND command = gen_command();
+    int idx = gen_idx(range_start, range_end);
+    int* ptr = array_ptr[idx];
+//    printf("idx: %d, ptr %d, data %d \n",idx, ((int)ptr%13),*ptr);
     if(command == READ){
-        int idx = gen_idx(range_start, range_end);
-        int* ptr = array_ptr[idx];
         int data = cache_read(ptr);
-        if(data != *ptr){
+        if(data != (int)ptr){
             printf("Data inconsistent \n");
             return false;
         }
         return true;
     }
     else if (command == UPDATE){
-        int idx = gen_idx(range_start, range_end);
-        int* ptr = array_ptr[idx];
         *ptr = gen_data();
-        cache_write(ptr, *ptr);
+        cache_write(ptr, (int)ptr);
         return true;
     }
     else{
@@ -69,6 +68,13 @@ bool simulate(int range_start, int range_end){
 
 double get_miss_rate(){
     return cache_get_miss_rate();
+}
+
+void free_gen_array(int addr_length){
+    for(int i = 0; i < addr_length; i++){
+        free(array_ptr[i]);
+    }
+    free(array_ptr);
 }
 
 /**********HELPER FUNCTIONS******************/
@@ -101,3 +107,5 @@ COMMAND gen_command(void){
     else
         return UPDATE;
 }
+
+

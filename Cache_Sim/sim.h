@@ -24,7 +24,7 @@ void init(int addr_length, Mode mode);
 
 /*
  * Simulate 1 iteration
- * @param: none
+ * @param: the start of idx and the end of index
  * @return: bool, true if simulate success, else false 
  */
 bool simulate(int range_start, int range_end);
@@ -35,4 +35,11 @@ bool simulate(int range_start, int range_end);
  * @return: miss rate in percentage
  */
 double get_miss_rate(void);
+
+/*
+ * Free the gen array ptr
+ * @param: the length of gen array 
+ * @return: none
+ */
+void free_gen_array(int addr_length);
 

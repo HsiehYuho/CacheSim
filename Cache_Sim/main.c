@@ -11,18 +11,17 @@
 #include <time.h>
 #include <stdlib.h>
 
-#define ITERATION 100
-#define PARTITION 4
+#define ITERATION 1000
+#define PARTITION 10
 
 // Array of pre-gen address
-#define ADDR_LENGTH 10
+#define ADDR_LENGTH 100
 
-// The mode of data fetching
-#define MODE 2
+// The mode of data fetching, 1 : count dominate, 2 : time dominate
+#define MODE 1
 
 int main(int argc, const char * argv[]) {
     srand((unsigned int) time(NULL));
-    printf("Hello world \n");
     // Consts
     int sample_rate = (ITERATION / 10);
     int itr_to_addr = ITERATION / ADDR_LENGTH;
@@ -36,7 +35,6 @@ int main(int argc, const char * argv[]) {
         printf("Time dominate \n");
     }
 
-    
     /*****TEST KEEP_MOVING DATA***/
     int portion = ITERATION/PARTITION; // 250
     printf("Portion: %d \n",portion);
@@ -45,30 +43,34 @@ int main(int argc, const char * argv[]) {
         int stage = i / portion; // 1 , 2 , 3 , 4 stage
         simulate(stage * portion / itr_to_addr, (stage+1) * portion / itr_to_addr);
         if((i % sample_rate) == 0){
-            printf("%d: miss rate: %.5f \n", i, get_miss_rate());
+//            printf("\n %d: miss rate: %.5f \n", i, get_miss_rate());
+            printf("%.5f \n",get_miss_rate());
+
         }
     }
     printf("\n");
-    
-    
+    clear_cache();
+
+    init(ADDR_LENGTH, MODE);
     /*****TEST REPEATING DATA***/
     printf("Repeating Data \n");
     int section = ITERATION / PARTITION; // 25
     printf("Section: %d \n",section);
     for(int i = 0; i < ITERATION; i++){
         int stage = i / section;
-        if(stage % 2 == 0){
-            simulate(0, section / itr_to_addr);
-        }else{
+        if(stage % 10 == 0){
             simulate(section / itr_to_addr , ADDR_LENGTH);
+        }else{
+            simulate(0, section / itr_to_addr);
         }
         if(i % sample_rate == 0){
-            printf("%d: miss rate: %.5f \n", i, get_miss_rate());
+//            printf("\n %d: miss rate: %.5f \n", i, get_miss_rate());
+            printf("%.5f \n",get_miss_rate());
         }
     }
+    free_gen_array(ADDR_LENGTH);
+    clear_cache();
     printf("\n");
-    
-
     printf("Finish! \n");
     return 0;
 }

@@ -8,7 +8,7 @@
 
 //mode1:time stamp, first-in-first-out ; mode2: count, smaller count smaller priority.
 
-#define SIZE 2
+#define SIZE 7
 #define DATA_SPACE 2
 typedef struct data_of_cache
 {
@@ -225,7 +225,7 @@ int cache_read(int* address)
 {
     int corresponding_index=0;
     int address_to_int= (int) address;
-    int data= *address;
+    int data= (int)address;
     corresponding_index=abs(address_to_int%SIZE);
     
     if(Mode_signal==1)//count more, priority higher
