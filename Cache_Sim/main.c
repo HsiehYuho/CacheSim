@@ -18,7 +18,7 @@
 #define ADDR_LENGTH 100
 
 // The mode of data fetching, 1 : count dominate, 2 : time dominate
-#define MODE 1
+#define MODE 2
 
 int main(int argc, const char * argv[]) {
     srand((unsigned int) time(NULL));
@@ -58,7 +58,7 @@ int main(int argc, const char * argv[]) {
     printf("Section: %d \n",section);
     for(int i = 0; i < ITERATION; i++){
         int stage = i / section;
-        if(stage % 10 == 0){
+        if(stage % 20 == 0){
             simulate(section / itr_to_addr , ADDR_LENGTH);
         }else{
             simulate(0, section / itr_to_addr);
@@ -69,7 +69,6 @@ int main(int argc, const char * argv[]) {
         }
     }
     free_gen_array(ADDR_LENGTH);
-    clear_cache();
     printf("\n");
     printf("Finish! \n");
     return 0;
