@@ -52,7 +52,11 @@ After running the above example command, you should be able to see the output st
 ## Change Parameter
 
 If you want to change the parameter, please go to following files to change it
+
 size of cache block : Cache_lib.c SIZE 
+
 n-way assotiative : Cache_lib.c DATA_SPACE
+
 number of instructions: main.c ADDR_LENGTH
+
 LRU & MU : main.c MODE 
